@@ -407,30 +407,30 @@ async function loadDataJson(jsonPath) {
     }
 }
 async function writeBenchmarkToExternalJson(bench, jsonFilePath, config) {
-    console.log(`HARA`);
-    core.debug('HARISA CORE');
-
-    const { name, maxItemsInChart, saveDataFile } = config;
-    const data = await loadDataJson(jsonFilePath);
-    const prevBench = addBenchmarkToDataJson(name, bench, data, maxItemsInChart);
-    if (!saveDataFile) {
-        core.debug('Skipping storing benchmarks in external data file');
-        return prevBench;
-    }
     try {
-        const jsonDirPath = path.dirname(jsonFilePath);
-        await io.mkdirP(jsonDirPath);
-        await fs_1.promises.writeFile(jsonFilePath, JSON.stringify(data, null, 2), 'utf8');
+        const { name, maxItemsInChart, saveDataFile } = config;
+        const data = await loadDataJson(jsonFilePath);
+        console.log('jsonFilePath is ', jsonFilePath)
+        const prevBench = addBenchmarkToDataJson(name, bench, data, maxItemsInChart);
+        console.log('Exit addBenchmarkToDataJson')
+        if (!saveDataFile) {
+            core.debug('Skipping storing benchmarks in external data file');
+            return prevBench;
+        }
+        try {
+            const jsonDirPath = path.dirname(jsonFilePath);
+            await io.mkdirP(jsonDirPath);
+            await fs_1.promises.writeFile(jsonFilePath, JSON.stringify(data, null, 2), 'utf8');
+        }
+        catch (err) {
+            throw new Error(`Could not store benchmark data as JSON at ${jsonFilePath}: ${err}`);
+        }
+        return prevBench;
+    } catch (err) {
+        console.log('ERROR', err)
     }
-    catch (err) {
-        throw new Error(`Could not store benchmark data as JSON at ${jsonFilePath}: ${err}`);
-    }
-    return prevBench;
 }
 async function writeBenchmark(bench, config) {
-    console.log(`HARA`);
-    core.debug('HARISA CORE')
-    
     const { name, externalDataJsonPath } = config;
     const prevBench = externalDataJsonPath
         ? await writeBenchmarkToExternalJson(bench, externalDataJsonPath, config)
