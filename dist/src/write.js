@@ -283,6 +283,7 @@ function addBenchmarkToDataJson(benchName, bench, data, maxItems) {
     // Add benchmark result
     console.log('Bench name', benchName)
     console.log('Bench', bench)
+    console.log('Data', data)
     console.log('Data entries', data.entries)
     if (data.entries[benchName] === undefined) {
         console.log('Fails here')
@@ -402,6 +403,7 @@ async function loadDataJson(jsonPath) {
     try {
         const content = await fs_1.promises.readFile(jsonPath, 'utf8');
         const json = JSON.parse(content);
+        console.log('loaded json is', json)
         core.debug(`Loaded external JSON file at ${jsonPath}`);
         return json;
     }
