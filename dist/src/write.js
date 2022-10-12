@@ -407,6 +407,9 @@ async function loadDataJson(jsonPath) {
     }
 }
 async function writeBenchmarkToExternalJson(bench, jsonFilePath, config) {
+    console.log(`HARA`);
+    core.debug('HARISA CORE');
+
     const { name, maxItemsInChart, saveDataFile } = config;
     const data = await loadDataJson(jsonFilePath);
     const prevBench = addBenchmarkToDataJson(name, bench, data, maxItemsInChart);
@@ -425,6 +428,9 @@ async function writeBenchmarkToExternalJson(bench, jsonFilePath, config) {
     return prevBench;
 }
 async function writeBenchmark(bench, config) {
+    console.log(`HARA`);
+    core.debug('HARISA CORE')
+    
     const { name, externalDataJsonPath } = config;
     const prevBench = externalDataJsonPath
         ? await writeBenchmarkToExternalJson(bench, externalDataJsonPath, config)
