@@ -281,7 +281,11 @@ function addBenchmarkToDataJson(benchName, bench, data, maxItems) {
     data.lastUpdate = Date.now();
     data.repoUrl = htmlUrl;
     // Add benchmark result
+    console.log('Bench name', benchName)
+    console.log('Bench', bench)
+    console.log('Data entries', data.entries)
     if (data.entries[benchName] === undefined) {
+        console.log('Fails here')
         data.entries[benchName] = [bench];
         core.debug(`No suite was found for benchmark '${benchName}' in existing data. Created`);
     }
